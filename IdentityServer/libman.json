@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.6.0",
+      "destination": "wwwroot/bootstrap/",
+      "files": [
+        "js/bootstrap.min.js",
+        "css/bootstrap.min.css",
+        "css/bootstrap.css",
+        "css/bootstrap.css.map",
+        "css/bootstrap.min.css.map",
+        "js/bootstrap.min.js.map",
+        "js/bootstrap.js.map",
+        "js/bootstrap.js"
+      ]
+    }
+  ]
+}

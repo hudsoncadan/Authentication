@@ -1,0 +1,23 @@
+﻿@model RegisterExternalViewModel
+
+    <div class="card p-5 shadow m-3">
+
+        <form asp-controller="Auth" asp-action="ExternalRegister" method="post">
+            <div class="card-title">
+                <h2>External Register from IdentityServer4</h2>
+            </div>
+
+            <div class="card-body">
+                <input type="hidden" asp-for="ReturnUrl" />
+
+                <div class="form-group">
+                    <label>Username</label>
+                    <input asp-for="UserName" class="form-control" />
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>

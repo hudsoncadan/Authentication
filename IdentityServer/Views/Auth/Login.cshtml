@@ -1,0 +1,56 @@
+﻿@model LoginViewModel
+
+<div class="card p-5 shadow m-3">
+
+    <div class="card-title text-center">
+        <h2>Entrar</h2>
+    </div>
+
+    <form method="post"
+          asp-controller="Auth"
+          asp-action="ExternalLogin"
+          asp-route-returnUrl="@Model.ReturnUrl">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="row">
+            <div class="col-lg-12 my-1">
+                <button type="submit" name="provider" value="Facebook" class="w-100 btn btn-primary">
+                    <i class="fab fa-facebook-f mr-2"></i>Acessar com o Facebook
+                </button>
+            </div>
+            @*<div class="col-lg-6 my-1">
+                <button type="submit" name="provider" value="google" class="w-100 btn btn-danger">
+                    <i class="fab fa-google mr-2"></i>Acessar com o Google
+                </button>
+            </div>*@
+        </div>
+
+        @*@foreach(var provider in Model.ExternalProviders)
+            {
+                <button type="submit" name="provider" value="@provider.Name" class="btn btn-primary">
+                    @provider.DisplayName
+                </button>
+            }*@
+    </form>
+
+    <hr />
+
+    <form asp-controller="Auth" asp-action="Login" method="post">
+        <input type="hidden" asp-for="ReturnUrl" />
+        <div class="form-group">
+            <label>Username</label>
+            <input asp-for="UserName" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input asp-for="Password" class="form-control" />
+        </div>
+
+        <div class="text-center">
+            <input type="submit" value="Realizar Login" class="w-100 btn btn-primary" />
+            <a asp-controller="Auth" asp-action="Register" asp-route-returnUrl="@Model.ReturnUrl" class="btn btn-link">Cadastrar</a>
+        </div>
+    </form>
+</div>
