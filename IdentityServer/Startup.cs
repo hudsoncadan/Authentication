@@ -31,7 +31,7 @@ namespace IdentityServer
         {
             services.AddIdentityConfig(Configuration);
 
-            services.AddIdentityServerConfig();
+            services.AddIdentityServerConfig(Configuration, Env);
 
             var secretsFacebook = Configuration.GetSection(ExternalSecretsModel.Facebook).Get<ExternalSecretsModel>();
 
