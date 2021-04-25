@@ -9,11 +9,13 @@ namespace IdentityServer.Extensions
     public static class IdentityConfig
     {
 
-        public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddIdentityConfig(
+            this IServiceCollection services, 
+            IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(config =>
             {
-                config.UseInMemoryDatabase("Memory");
+                config.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(config =>

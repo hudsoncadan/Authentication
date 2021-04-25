@@ -29,6 +29,65 @@ namespace IdentityServer
                 userManager.CreateAsync(user, "password").GetAwaiter().GetResult();
                 userManager.AddClaimAsync(user, new Claim("Product", "Read;Add;Update;")).GetAwaiter().GetResult();
                 userManager.AddClaimAsync(user, new Claim("Vendor", "Read;")).GetAwaiter().GetResult();
+
+                // Initializing the database
+                // http://docs.identityserver.io/en/latest/quickstarts/5_entityframework.html#initializing-the-database
+                scope.ServiceProvider
+                    .GetRequiredService<PersistedGrantDbContext>()
+                    .Database
+                    .Migrate();
+
+                var context = scope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                context.Database.Migrate();
+
+                context.Clients.RemoveRange(
+                    context.Clients.ToListAsync().GetAwaiter().GetResult());
+                context.SaveChanges();
+                if (!context.Clients.Any())
+                {
+                    foreach (var client in Configuration.GetClients())
+                    {
+                        context.Clients.Add(client.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                context.IdentityResources.RemoveRange(
+                    context.IdentityResources.ToListAsync().GetAwaiter().GetResult());
+                context.SaveChanges();
+                if (!context.IdentityResources.Any())
+                {
+                    foreach (var resource in Configuration.GetIdentityResources())
+                    {
+                        context.IdentityResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+
+                context.ApiScopes.RemoveRange(
+                  context.ApiScopes.ToListAsync().GetAwaiter().GetResult());
+                context.SaveChanges();
+                if (!context.ApiScopes.Any())
+                {
+                    foreach (var resource in Configuration.GetApiScopes())
+                    {
+                        context.ApiScopes.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                context.ApiResources.RemoveRange(
+                    context.ApiResources.ToListAsync().GetAwaiter().GetResult());
+                context.SaveChanges();
+                if (!context.ApiResources.Any())
+                {
+                    foreach (var resource in Configuration.GetApiResources())
+                    {
+                        context.ApiResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
             }
 
             host.Run();
